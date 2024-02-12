@@ -27,10 +27,12 @@ const Time = () => {
         }
 
         setTime(returnString);
-    }
+    };
 
     useEffect(() => {
-        timeString();
+        const interval = setInterval(() => timeString(), 1000);
+
+        return () => clearInterval(interval);
     }, []);
 
     return (
