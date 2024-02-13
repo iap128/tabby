@@ -38,7 +38,7 @@ const Weather = () => {
             //and night indices are negative. We are only interested in the day icons
             const icons = weather?.daypart.map(day => day.iconCode).flat();
             
-            for (let i = 0; i < icons.length; i++) {
+            for (let i = 0; i < weather.dayOfWeek.length; i++) {
                 const dayToAdd: DailyWeatherCard = {
                     dayName: weather.dayOfWeek[i],
                     tempMax: weather?.temperatureMax[i],
@@ -62,7 +62,7 @@ const Weather = () => {
 
     return (
         <Card title='Weather'>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '15px' }}>
                 {dailyWeather.map(day => 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                         <Typography.Text strong>{day.dayName}</Typography.Text>
