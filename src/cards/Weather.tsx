@@ -1,4 +1,4 @@
-import { Card, Typography, Image } from "antd";
+import { Card, Typography, Image, Divider, Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 
 //api reference :https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
@@ -13,6 +13,9 @@ interface WeatherResponse {
 interface DayPart {
     iconCode: number[];
     windSpeed: number[];
+    windDirectionCardinal: string[];
+    precipChance: number[];
+    temperature: number[];
 }
 
 interface DailyWeatherCard {
@@ -62,8 +65,28 @@ const Weather = () => {
         buildDailyCard();
     }, [buildDailyCard]);
 
+    const CurrentConditions = () => {
+        return (
+            <div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Image preview={false} src={`./weathericons/icon${dailyWeather[0]?.iconCode}.png`} width={64} height={64} />
+                    <Typography.Title>{weather?.daypart[0].temperature[0]}</Typography.Title>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Statistic title='Wind Speed' value={weather?.daypart[0].windSpeed[0]}/>
+                    <Statistic title='Wind Direction' value={weather?.daypart[0].windDirectionCardinal[0]}/>
+                    <Statistic title='Precipitation Chance' value={weather?.daypart[0].precipChance[0]}/>
+                </div>
+            </div>
+        )
+    };
+
     return (
         <Card title='Weather'>
+            <CurrentConditions />
+
+            <Divider />
+
             <div style={{ display: 'flex', gap: '15px' }}>
                 {dailyWeather.map(day => 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
