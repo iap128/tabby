@@ -36,17 +36,19 @@ const Weather = () => {
             
             //the icon code is given as day and night. Day indices are positive
             //and night indices are negative. We are only interested in the day icons
-            const icons = weather?.daypart.map(day => day.iconCode).flat();
+            let iconIndex = 0;
             
             for (let i = 0; i < weather.dayOfWeek.length; i++) {
                 const dayToAdd: DailyWeatherCard = {
                     dayName: weather.dayOfWeek[i],
                     tempMax: weather?.temperatureMax[i],
                     tempMin: weather?.temperatureMin[i],
-                    iconCode: weather?.daypart[0].iconCode[0]
+                    iconCode: weather?.daypart[0].iconCode[iconIndex]
                 }
     
                 setDailyWeather(prev => [...prev, dayToAdd]);
+
+                iconIndex += 2;
             }
         }
 
