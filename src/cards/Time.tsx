@@ -25,6 +25,9 @@ const Time = () => {
         if (hours > 11) {
             returnString += (' PM');
         }
+        else {
+            returnString += (' AM');
+        }
 
         setTime(returnString);
     };

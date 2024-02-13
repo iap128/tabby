@@ -2,6 +2,7 @@ import './App.css';
 import { Col, Row } from 'antd';
 import Time from './cards/Time';
 import Weather from './cards/Weather';
+import QuickLinks from './cards/QuickLinks';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Col>
         <Col>
           <Time />
+        </Col>
+        <Col>
+          <QuickLinks />
         </Col>
       </Row>
     </div>
