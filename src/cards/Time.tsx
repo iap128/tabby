@@ -2,6 +2,7 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Statistic } from "antd";
 import { useEffect, useState } from "react";
+import { ClockLoader } from "react-spinners";
 
 const Time = () => {
     const [time, setTime] = useState('');
@@ -40,7 +41,7 @@ const Time = () => {
 
     return (
         <Card>
-            <Statistic title='Clock' value={time} prefix={<FontAwesomeIcon icon={faClock}/>} />
+            {time === '' ? <ClockLoader /> : <Statistic title='Clock' value={time} prefix={<FontAwesomeIcon icon={faClock}/>} />}
         </Card>
     );
 };
