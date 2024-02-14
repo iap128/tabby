@@ -1,5 +1,4 @@
 import './App.css';
-import { Col, Row } from 'antd';
 import Time from './cards/Time';
 import Weather from './cards/Weather';
 import QuickLinks from './cards/QuickLinks';
@@ -14,17 +13,17 @@ function App() {
         height: '240px',
       }}
     >
-      <Row gutter={16}>
-        <Col>
+      <div style={{ display: 'flex', gap: '20px' }}>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <Weather />
-        </Col>
-        <Col>
-          <Time />
-        </Col>
-        <Col>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <QuickLinks />
-        </Col>
-      </Row>
+          <Time />
+        </div>
+      </div>
     </div>
   );
 }
