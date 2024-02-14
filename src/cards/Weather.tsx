@@ -1,7 +1,8 @@
 import { Card, Typography, Image, Divider, Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 
-//api reference :https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
+// api reference: https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
+// https://docs.google.com/document/d/1KGb8bTVYRsNgljnNH67AMhckY8AQT2FVwZ9urj8SWBs/edit
 
 interface WeatherResponse {
     temperatureMax: number[];
@@ -18,6 +19,17 @@ interface DayPart {
     temperature: number[];
 }
 
+interface CurrentResponse {
+    imperial: {
+        precipTotal: number;
+        temp: number;
+        windChill: number;
+        windGust: number;
+        windSpeed: number;
+    };
+    winddir: number;
+}
+
 interface DailyWeatherCard {
     dayName: string;
     tempMax: number;
@@ -27,6 +39,7 @@ interface DailyWeatherCard {
 
 const Weather = () => {
     const [weather, setWeather] = useState<WeatherResponse | null>(null);
+    const [currentWeather, setCurrentWeather] = useState<CurrentResponse | null>(null);
     const [dailyWeather, setDailyWeather] = useState<DailyWeatherCard[]>([]);
     
     const getWeather = async () => {
@@ -34,11 +47,16 @@ const Weather = () => {
         setWeather(response);
     };
 
+    const getCurrentConditions = async () => {
+        const response = await fetch('https://api.weather.com/v2/pws/observations/current?stationId=KORBEAVE588&format=json&units=e&apiKey=7c8632e7f0c34cfa8632e7f0c36cfa4a').then(res => res.json());
+        setCurrentWeather(response.observations[0]);
+    }
+
     const buildDailyCard = useCallback(() => {
         if (weather) {
             
-            //the icon code is given as day and night. Day indices are positive
-            //and night indices are negative. We are only interested in the day icons
+            // the icon code is given as day and night. Day indices are positive
+            // and night indices are negative. We are only interested in the day icons
             let iconIndex = 0;
             
             for (let i = 0; i < weather.dayOfWeek.length; i++) {
@@ -59,6 +77,7 @@ const Weather = () => {
 
     useEffect(() => {
         getWeather();
+        getCurrentConditions();
     }, []);
 
     useEffect(() => {
@@ -68,14 +87,14 @@ const Weather = () => {
     const CurrentConditions = () => {
         return (
             <div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <Image preview={false} src={`./weathericons/icon${dailyWeather[0]?.iconCode}.png`} width={64} height={64} />
-                    <Typography.Title>{weather?.daypart[0].temperature[0]}</Typography.Title>
+                    <Typography.Title>{currentWeather?.imperial.temp}</Typography.Title>
+                    <Typography.Text type="secondary">Feels Like {currentWeather?.imperial.windChill}</Typography.Text>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Statistic title='Wind Speed' value={weather?.daypart[0].windSpeed[0]}/>
-                    <Statistic title='Wind Direction' value={weather?.daypart[0].windDirectionCardinal[0]}/>
-                    <Statistic title='Precipitation Chance' value={weather?.daypart[0].precipChance[0]}/>
+                    <Statistic title='Wind Speed' value={currentWeather?.imperial.windSpeed}/>
+                    <Statistic title='Precipitation Quantity' value={currentWeather?.imperial.precipTotal}/>
                 </div>
             </div>
         )
