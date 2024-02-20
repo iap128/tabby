@@ -56,14 +56,17 @@ const Weather = () => {
     setCurrentWeather(response.observations[0]);
   };
 
-  const getWeatherIcon = (index: number): number => {
-    let icon = weather?.daypart[0].iconCode[index];
-    if (icon === null) {
-      icon = weather?.daypart[0].iconCode[index + 1];
-    }
+  const getWeatherIcon = useCallback(
+    (index: number): number => {
+      let icon = weather?.daypart[0].iconCode[index];
+      if (icon === null) {
+        icon = weather?.daypart[0].iconCode[index + 1];
+      }
 
-    return icon ?? 0;
-  };
+      return icon ?? 0;
+    },
+    [weather?.daypart],
+  );
 
   const buildDailyCard = useCallback(() => {
     if (weather) {
@@ -76,7 +79,7 @@ const Weather = () => {
           dayName: weather.dayOfWeek[i],
           tempMax: weather?.temperatureMax[i],
           tempMin: weather?.temperatureMin[i],
-          iconCode: getWeatherIcon(i),
+          iconCode: getWeatherIcon(iconIndex),
         };
 
         setDailyWeather(prev => [...prev, dayToAdd]);
@@ -84,7 +87,7 @@ const Weather = () => {
         iconIndex += 2;
       }
     }
-  }, [weather]);
+  }, [getWeatherIcon, weather]);
 
   useEffect(() => {
     getWeather();
