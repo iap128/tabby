@@ -1,5 +1,6 @@
 import { Card, Typography, Image, Divider, Statistic } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
+import { Config } from '../Config';
 
 // api reference: https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
 // https://docs.google.com/document/d/1KGb8bTVYRsNgljnNH67AMhckY8AQT2FVwZ9urj8SWBs/edit
@@ -38,23 +39,24 @@ interface DailyWeatherCard {
 }
 
 const Weather = () => {
+  const { stationID, weatherZip, apiKey } = Config;
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
   const [currentWeather, setCurrentWeather] = useState<CurrentResponse | null>(null);
   const [dailyWeather, setDailyWeather] = useState<DailyWeatherCard[]>([]);
 
-  const getWeather = async () => {
+  const getWeather = useCallback(async () => {
     const response = await fetch(
-      'https://api.weather.com/v3/wx/forecast/daily/5day?postalKey=97008:US&units=e&language=en-US&format=json&apiKey=7c8632e7f0c34cfa8632e7f0c36cfa4a',
+      `https://api.weather.com/v3/wx/forecast/daily/5day?postalKey=${weatherZip}:US&units=e&language=en-US&format=json&apiKey=${apiKey}`,
     ).then(res => res.json());
     setWeather(response);
-  };
+  }, [apiKey, weatherZip]);
 
-  const getCurrentConditions = async () => {
+  const getCurrentConditions = useCallback(async () => {
     const response = await fetch(
-      'https://api.weather.com/v2/pws/observations/current?stationId=KORBEAVE588&format=json&units=e&apiKey=7c8632e7f0c34cfa8632e7f0c36cfa4a',
+      `https://api.weather.com/v2/pws/observations/current?stationId=${stationID}&format=json&units=e&apiKey=${apiKey}`,
     ).then(res => res.json());
     setCurrentWeather(response.observations[0]);
-  };
+  }, [apiKey, stationID]);
 
   const getWeatherIcon = useCallback(
     (index: number): number => {
@@ -92,7 +94,7 @@ const Weather = () => {
   useEffect(() => {
     getWeather();
     getCurrentConditions();
-  }, []);
+  }, [getCurrentConditions, getWeather]);
 
   useEffect(() => {
     buildDailyCard();
