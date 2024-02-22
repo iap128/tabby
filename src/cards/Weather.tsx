@@ -9,6 +9,7 @@ interface WeatherResponse {
   temperatureMax: number[];
   temperatureMin: number[];
   dayOfWeek: string[];
+  narrative: string[];
   daypart: DayPart[];
 }
 
@@ -35,6 +36,7 @@ interface DailyWeatherCard {
   dayName: string;
   tempMax: number;
   tempMin: number;
+  narrative: string;
   iconCode: number;
 }
 
@@ -81,6 +83,7 @@ const Weather = () => {
           dayName: weather.dayOfWeek[i],
           tempMax: weather?.temperatureMax[i],
           tempMin: weather?.temperatureMin[i],
+          narrative: weather.narrative[i],
           iconCode: getWeatherIcon(iconIndex),
         };
 
@@ -115,14 +118,25 @@ const Weather = () => {
             Feels Like {currentWeather?.imperial.windChill}
           </Typography.Text>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Statistic title='Wind Speed' value={currentWeather?.imperial.windSpeed} suffix='mph' />
-          <Statistic
-            title='Precipitation Quantity'
-            value={currentWeather?.imperial.precipTotal}
-            suffix='in'
-          />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Card>
+            <Statistic title='Wind Speed' value={currentWeather?.imperial.windSpeed} suffix='mph' />
+          </Card>
+          <Card>
+            <Statistic
+              title='Precipitation Quantity'
+              value={currentWeather?.imperial.precipTotal}
+              suffix='in'
+            />
+          </Card>
         </div>
+
+        <Divider />
+
+        <Typography.Paragraph style={{ maxWidth: '400px' }} type='secondary'>
+          {dailyWeather[0]?.narrative}
+        </Typography.Paragraph>
       </div>
     );
   };
