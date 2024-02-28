@@ -2,6 +2,7 @@ import './App.css';
 import Time from './cards/Time';
 import Weather from './cards/Weather';
 import QuickLinks from './cards/QuickLinks';
+import CalendarCard from './cards/CalendarCard';
 
 function App() {
   return (
@@ -19,9 +20,10 @@ function App() {
           <Weather />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '33%' }}>
           <QuickLinks />
           <Time />
+          <CalendarCard />
         </div>
       </div>
     </div>
