@@ -142,7 +142,7 @@ const Weather = () => {
   };
 
   return (
-    <Card title='Weather'>
+    <Card title='Weather' extra={<a href={`https://www.google.com/search?q=weather%20${weatherZip}`}>View More</a>}>
       <CurrentConditions />
 
       <Divider />
