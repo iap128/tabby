@@ -1,6 +1,7 @@
 import { Card, Typography, Image, Divider, Statistic } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Config } from '../Config';
+import LoadingSkeleton from '../components/LoadingSkeleton';
 
 // api reference: https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
 // https://docs.google.com/document/d/1KGb8bTVYRsNgljnNH67AMhckY8AQT2FVwZ9urj8SWBs/edit
@@ -142,32 +143,46 @@ const Weather = () => {
   };
 
   return (
-    <Card title='Weather' extra={<a href={`https://www.google.com/search?q=weather%20${weatherZip}`}>View More</a>}>
-      <CurrentConditions />
+    <>
+      {weather == null || currentWeather == null ? (
+        <LoadingSkeleton />
+      ) : (
+        <Card
+          title='Weather'
+          extra={<a href={`https://www.google.com/search?q=weather%20${weatherZip}`}>View More</a>}
+        >
+          <CurrentConditions />
 
-      <Divider />
+          <Divider />
 
-      <div style={{ display: 'flex', gap: '15px' }}>
-        {dailyWeather.map(day => (
-          <div
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}
-          >
-            <Typography.Text strong>{day.dayName}</Typography.Text>
-            <Image
-              preview={false}
-              src={`./weathericons/icon${day.iconCode}.png`}
-              width={32}
-              height={32}
-            />
-            <div>
-              <Typography.Text>{day.tempMax}</Typography.Text>
-              <Typography.Text type='secondary'> / </Typography.Text>
-              <Typography.Text type='secondary'>{day.tempMin}</Typography.Text>
-            </div>
+          <div style={{ display: 'flex', gap: '15px' }}>
+            {dailyWeather.map(day => (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <Typography.Text strong>{day.dayName}</Typography.Text>
+                <Image
+                  preview={false}
+                  src={`./weathericons/icon${day.iconCode}.png`}
+                  width={32}
+                  height={32}
+                />
+                <div>
+                  <Typography.Text>{day.tempMax}</Typography.Text>
+                  <Typography.Text type='secondary'> / </Typography.Text>
+                  <Typography.Text type='secondary'>{day.tempMin}</Typography.Text>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </Card>
+        </Card>
+      )}
+    </>
   );
 };
 
