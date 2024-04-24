@@ -10,6 +10,26 @@ const Links: LinkInterface[] = [
     url: 'https://chromewebstore.google.com',
     icon: './webstore.png',
   },
+  {
+    name: 'N818PE - CMS',
+    url: 'https://n818pe.com/cms',
+    icon: './ryan.png',
+  },
+  {
+    name: 'N818PE - Wish List',
+    url: 'https://n818pe.com/wishlist',
+    icon: './ryan.png',
+  },
+  {
+    name: 'Scale Mates',
+    url: 'https://scalemates.com',
+    icon: './scm.svg',
+  },
+  {
+    name: 'Facebook',
+    url: 'https://facebook.com',
+    icon: './facebook.png',
+  },
 ];
 
 export const Config = {
