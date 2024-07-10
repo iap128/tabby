@@ -1,21 +1,25 @@
-import { FC, useState } from "react";
-import { LinkInterface } from "./Config";
+import { useState } from "react";
+import { Config, LinkInterface } from "./Config";
 import { Button, Form, Image, Input, Typography } from "antd";
+import { setCookie } from "typescript-cookie";
 
-interface Props {
-    links: LinkInterface[];
-    setLinks: (links: LinkInterface[]) => void;
 
-}
-
-const LinkAdder: FC<Props> = ({ links, setLinks }) => {
+const LinkAdder= () => {
+    const [links, setLinks] = useState<LinkInterface[]>(Config.links);
     const [adding, setAdding] = useState(false);
 
-    const [form] = Form.useForm();
+    const [linkForm] = Form.useForm();
 
     const addLink = (values: any) => {
-        setLinks([...links, values]);
+        const newLink: LinkInterface = {
+            name: values.name,
+            url: values.url,
+            icon: values.icon,
+        }
+
+        setLinks([...links, newLink]);
         setAdding(false);
+        setCookie('links', JSON.stringify(links));
     }
 
     return (
@@ -24,13 +28,13 @@ const LinkAdder: FC<Props> = ({ links, setLinks }) => {
 
             {links.map(link => (
                 <div>
-                    <Image preview={false} src={link.icon} />
+                    <Image preview={false} width={50} src={link.icon} />
                     <Typography.Text>{link.name}</Typography.Text>  
                 </div>
             ))}
 
             {adding && (
-                <Form form={form} onFinish={addLink} autoComplete="off">
+                <Form form={linkForm} onFinish={addLink} autoComplete="off">
                     <Form.Item label='Name' name='name'>
                         <Input />
                     </Form.Item>
@@ -41,7 +45,7 @@ const LinkAdder: FC<Props> = ({ links, setLinks }) => {
                         <Input />
                     </Form.Item>
                     <Form.Item>
-                        <Button block type="primary" htmlType="submit">Save</Button>
+                        <Button block type="primary" htmlType="submit">Add</Button>
                     </Form.Item>
                 </Form>
             )}

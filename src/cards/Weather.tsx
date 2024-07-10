@@ -158,6 +158,7 @@ const Weather = () => {
           <div style={{ display: 'flex', gap: '15px' }}>
             {dailyWeather.map(day => (
               <div
+                key={day.dayName}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',

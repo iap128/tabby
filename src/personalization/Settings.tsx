@@ -1,6 +1,6 @@
-import { Button, Drawer, Form, Input, Typography } from "antd";
-import { Config, LinkInterface } from "../Config";
-import { FC, useState } from "react";
+import { Button, Divider, Drawer, Form, Input, Typography } from "antd";
+import { Config } from "../Config";
+import { FC } from "react";
 import { setCookie } from "typescript-cookie";
 import LinkAdder from "../LinkAdder";
 
@@ -10,14 +10,13 @@ interface Props {
 }
 
 const Settings: FC<Props> = ({ open, setOpen }) => {
-    const [links, setLinks] = useState<LinkInterface[]>([]);
     const [form] = Form.useForm();
 
     const closeFunction = (values: any) => {
+        console.log('running save');
         setCookie('key', values.key);
         setCookie('id', values.station);
         setCookie('zip', values.zip);
-        setCookie('links', JSON.stringify(links));
 
         setOpen(false);
         window.location.reload();
@@ -37,12 +36,14 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
                     <Input />
                 </Form.Item>
 
-                <LinkAdder links={links} setLinks={setLinks}/>
-
                 <Form.Item>
                     <Button block type="primary" htmlType="submit">Save</Button>
                 </Form.Item>
+
+                <Divider />
             </Form>
+
+            <LinkAdder />
         </Drawer>
     )
 };

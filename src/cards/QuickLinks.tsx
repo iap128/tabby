@@ -8,6 +8,7 @@ const QuickLinks = () => {
     <Card title='Shortcuts'>
       {links.map(link => (
         <a
+          key={link.name}
           href={link.url}
           style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '15px' }}
         >
