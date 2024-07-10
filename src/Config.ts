@@ -1,6 +1,6 @@
 import { getCookie } from "typescript-cookie";
 
-interface LinkInterface {
+export interface LinkInterface {
   name: string;
   url: string;
   icon: string;
