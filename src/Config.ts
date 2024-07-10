@@ -10,7 +10,7 @@ export const Config = {
   stationID: getCookie('id'),
   weatherZip: getCookie('zip'),
   apiKey: getCookie('key'),
-  links: JSON.parse(getCookie('links') || '{}') as LinkInterface[],
+  links: JSON.parse(getCookie('links') || '[{}]') as LinkInterface[],
 };
 
 
