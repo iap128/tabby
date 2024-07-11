@@ -15,7 +15,7 @@ const LinkAdder= () => {
         const newLink: LinkInterface = {
             name: values.name,
             url: values.url,
-            icon: values.icon,
+            icon: `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${values.url}/&size=32`,
         };
 
         setAdding(false);
@@ -35,7 +35,7 @@ const LinkAdder= () => {
 
             {links.map(link => (
                 <div key={link.name}>
-                    <Image preview={false} width={50} src={link.icon} />
+                    <Image preview={false} width={32} src={link.icon} />
                     <Typography.Text>{link.name}</Typography.Text>
                     <Button icon={<DeleteOutlined />} onClick={() => deleteLink(link)} />
                 </div>
@@ -48,9 +48,6 @@ const LinkAdder= () => {
                     </Form.Item>
                     <Form.Item label='Link URL' name='url'>
                         <Input type='url' />
-                    </Form.Item>
-                    <Form.Item label='Icon URL' name='icon'>
-                        <Input type="url" />
                     </Form.Item>
                     <Form.Item>
                         <Button block type="primary" htmlType="submit">Add</Button>
