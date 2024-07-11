@@ -4,9 +4,12 @@ import { getCookie } from "typescript-cookie";
 
 interface Props {
     closeAction: () => void;
+    weatherRef: React.MutableRefObject<null>;
+    quickLinksRef: React.MutableRefObject<null>;
+    settingsRef: React.MutableRefObject<null>;
 }
 
-const AppTour: FC<Props> = ({ closeAction }) => {
+const AppTour: FC<Props> = ({ closeAction, weatherRef, quickLinksRef, settingsRef }) => {
     const [open, setOpen] = useState(false);
     const firstVisit = getCookie('firstVisit');
   
@@ -14,6 +17,11 @@ const AppTour: FC<Props> = ({ closeAction }) => {
       if (firstVisit == null) {
         setOpen(true);
     }}, [firstVisit]);
+
+    const close = () => {
+        setOpen(false);
+        closeAction();
+    }
     
     const steps: TourProps['steps'] = [
         {
@@ -25,19 +33,22 @@ const AppTour: FC<Props> = ({ closeAction }) => {
         {
             title: 'Weather',
             description: 'The weather card shows current conditions and a 5-day forecast. It is powered with a weather underground API key.',
+            target: () => weatherRef.current,
         },
         {
             title: 'Quick Links',
             description: 'The quick links card shows a list of links that you can add and quickly access.',
+            target: () => quickLinksRef.current,
         },
         {
             title: 'Ready to get started?',
-            description: 'Open settings to get an API key and add your links'
+            description: 'Open settings to get an API key and add your links',
+            target: () => settingsRef.current,
         }
     ];
 
     return (
-        <Tour open={open} onClose={closeAction} steps={steps} />
+        <Tour open={open} onClose={close} steps={steps} />
     )
 };
 
