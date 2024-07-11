@@ -73,6 +73,16 @@ const Weather = () => {
     [weather?.daypart],
   );
 
+  const isLoading = (): boolean => {
+    if (weatherZip && !stationID) {
+      return weather == null;
+    }
+    if (stationID && !weatherZip) {
+      return currentWeather == null;
+    }
+    return weather == null || currentWeather == null;
+  }
+
   const buildDailyCard = useCallback(() => {
     if (weather) {
       // the icon code is given as day and night. Day indices are positive
@@ -96,9 +106,14 @@ const Weather = () => {
   }, [getWeatherIcon, weather]);
 
   useEffect(() => {
-    getWeather();
-    getCurrentConditions();
-  }, [getCurrentConditions, getWeather]);
+    if (weatherZip && apiKey) {
+      getWeather();
+    }
+
+    if (stationID && apiKey) {
+      getCurrentConditions();
+    }
+  }, [apiKey, getCurrentConditions, getWeather, stationID, weatherZip]);
 
   useEffect(() => {
     buildDailyCard();
@@ -144,7 +159,7 @@ const Weather = () => {
 
   return (
     <>
-      {weather == null || currentWeather == null ? (
+      {isLoading() ? (
         <LoadingSkeleton />
       ) : (
         <Card
@@ -158,6 +173,7 @@ const Weather = () => {
           <div style={{ display: 'flex', gap: '15px' }}>
             {dailyWeather.map(day => (
               <div
+                key={day.dayName}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',

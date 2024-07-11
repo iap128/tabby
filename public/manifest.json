@@ -2,9 +2,9 @@
   "short_name": "Tabby",
   "name": "New Tab",
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
+    "16": "tabby.png",
+    "48": "tabby.png",
+    "128": "tabby.png"
   },
   "version": "1.0",
   "manifest_version": 3,
