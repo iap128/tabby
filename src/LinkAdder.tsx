@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Config, LinkInterface } from "./Config";
 import { Button, Form, Image, Input, Typography } from "antd";
 import { setCookie } from "typescript-cookie";
+import { DeleteOutlined } from "@ant-design/icons";
 
 
 const LinkAdder= () => {
@@ -15,11 +16,17 @@ const LinkAdder= () => {
             name: values.name,
             url: values.url,
             icon: values.icon,
-        }
+        };
 
-        setLinks([...links, newLink]);
         setAdding(false);
-        setCookie('links', JSON.stringify(links));
+        setCookie('links', JSON.stringify([...links, newLink]), { expires: 365 });
+        setLinks([...links, newLink]);
+    };
+
+    const deleteLink = (link: LinkInterface) => {
+        const updatedLinks = links.filter(l => l !== link);
+        setCookie('links', JSON.stringify(updatedLinks), { expires: 365 });
+        setLinks(updatedLinks);
     }
 
     return (
@@ -27,22 +34,23 @@ const LinkAdder= () => {
             <Typography.Title level={3}>Quick Links</Typography.Title>
 
             {links.map(link => (
-                <div>
+                <div key={link.name}>
                     <Image preview={false} width={50} src={link.icon} />
-                    <Typography.Text>{link.name}</Typography.Text>  
+                    <Typography.Text>{link.name}</Typography.Text>
+                    <Button icon={<DeleteOutlined />} onClick={() => deleteLink(link)} />
                 </div>
             ))}
 
             {adding && (
                 <Form form={linkForm} onFinish={addLink} autoComplete="off">
-                    <Form.Item label='Name' name='name'>
+                    <Form.Item label='Link Name' name='name'>
                         <Input />
                     </Form.Item>
-                    <Form.Item label='URL' name='url'>
-                        <Input />
+                    <Form.Item label='Link URL' name='url'>
+                        <Input type='url' />
                     </Form.Item>
-                    <Form.Item label='Icon' name='icon'>
-                        <Input />
+                    <Form.Item label='Icon URL' name='icon'>
+                        <Input type="url" />
                     </Form.Item>
                     <Form.Item>
                         <Button block type="primary" htmlType="submit">Add</Button>

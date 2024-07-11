@@ -6,11 +6,19 @@ export interface LinkInterface {
   icon: string;
 }
 
+const getLinks = (): LinkInterface[] => {
+  const links = getCookie('links');
+  if (links) {
+    return JSON.parse(links);
+  }
+  return [];
+}
+
 export const Config = {
   stationID: getCookie('id'),
   weatherZip: getCookie('zip'),
   apiKey: getCookie('key'),
-  links: JSON.parse(getCookie('links') || '[{}]') as LinkInterface[],
+  links: getLinks(),
 };
 
 
