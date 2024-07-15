@@ -4,6 +4,7 @@ import { FC } from "react";
 import { setCookie } from "typescript-cookie";
 import LinkAdder from "../LinkAdder";
 import { QuestionOutlined } from "@ant-design/icons";
+import ImportExport from "./ImportExport";
 
 interface Props {
     open: boolean;
@@ -55,6 +56,10 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
             </Form>
 
             <LinkAdder />
+
+            <Divider />
+
+            <ImportExport />
         </Drawer>
     )
 };
