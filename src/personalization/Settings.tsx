@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Form, Input, Typography } from "antd";
 import { Config } from "../Config";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { setCookie } from "typescript-cookie";
 import LinkAdder from "../LinkAdder";
 import { QuestionOutlined } from "@ant-design/icons";
@@ -13,6 +13,7 @@ interface Props {
 
 const Settings: FC<Props> = ({ open, setOpen }) => {
     const [form] = Form.useForm();
+    const [changedLink, setChangedLink] = useState(false);
 
     const closeFunction = (values: any) => {
         if (values.key) {
@@ -30,7 +31,14 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
     };
 
     return (
-        <Drawer title='Settings' open={open} onClose={() => window.location.reload()}>
+        <Drawer title='Settings' open={open} onClose={() => {
+            if (changedLink) {
+                window.location.reload();
+            }
+            else {
+                setOpen(false);
+            }
+        }}>
             <Form form={form} onFinish={closeFunction} autoComplete="off">
                 <Typography.Title level={3}>Weather</Typography.Title>
                 
@@ -55,7 +63,7 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
                 <Divider />
             </Form>
 
-            <LinkAdder />
+            <LinkAdder setLinkChanged={setChangedLink} />
 
             <Divider />
 

@@ -6,8 +6,6 @@ import { setCookie } from "typescript-cookie";
 import Dropzone from "react-dropzone";
 
 const ImportExport = () => {
-
-
     const importConfig = (file: File) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -27,6 +25,8 @@ const ImportExport = () => {
             }
         };
         reader.readAsText(file);
+
+        window.location.reload();
     };
 
     const exportConfig = () => {
