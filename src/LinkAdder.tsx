@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Config, LinkInterface } from "./Config";
 import { Button, Form, Image, Input, Typography } from "antd";
 import { setCookie } from "typescript-cookie";
 import { DeleteOutlined } from "@ant-design/icons";
 
+interface Props {
+    setLinkChanged: (changed: boolean) => void;
+}
 
-const LinkAdder= () => {
+const LinkAdder: FC<Props> = ({ setLinkChanged }) => {
     const [links, setLinks] = useState<LinkInterface[]>(Config.links);
     const [adding, setAdding] = useState(false);
 
@@ -21,12 +24,14 @@ const LinkAdder= () => {
         setAdding(false);
         setCookie('links', JSON.stringify([...links, newLink]), { expires: 365 });
         setLinks([...links, newLink]);
+        setLinkChanged(true);
     };
 
     const deleteLink = (link: LinkInterface) => {
         const updatedLinks = links.filter(l => l !== link);
         setCookie('links', JSON.stringify(updatedLinks), { expires: 365 });
         setLinks(updatedLinks);
+        setLinkChanged(true);
     }
 
     return (
