@@ -41,7 +41,7 @@ const LinkAdder: FC<Props> = ({ setLinkChanged }) => {
       {links.map(link => (
         <div
           key={link.name}
-          style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 10px' }}
+          style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0px' }}
         >
           <Image preview={false} width={32} src={link.icon} />
           <Typography.Text>{link.name}</Typography.Text>
