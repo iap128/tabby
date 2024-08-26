@@ -2,7 +2,6 @@ import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, Typography, Flex } from 'antd';
 import { saveAs } from 'file-saver';
 import { Config } from '../Config';
-import { setCookie } from 'typescript-cookie';
 import Dropzone from 'react-dropzone';
 
 const ImportExport = () => {
@@ -12,16 +11,16 @@ const ImportExport = () => {
       const parsedJSON = JSON.parse(e.target?.result as string) as typeof Config;
 
       if (parsedJSON.apiKey) {
-        setCookie('key', parsedJSON.apiKey);
+        window.localStorage.setItem('key', parsedJSON.apiKey);
       }
       if (parsedJSON.stationID) {
-        setCookie('id', parsedJSON.stationID);
+        window.localStorage.setItem('id', parsedJSON.stationID);
       }
       if (parsedJSON.weatherZip) {
-        setCookie('zip', parsedJSON.weatherZip);
+        window.localStorage.setItem('zip', parsedJSON.weatherZip);
       }
       if (parsedJSON.links) {
-        setCookie('links', JSON.stringify(parsedJSON.links));
+        window.localStorage.setItem('links', JSON.stringify(parsedJSON.links));
       }
     };
     reader.readAsText(file);

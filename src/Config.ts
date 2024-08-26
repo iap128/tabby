@@ -1,5 +1,3 @@
-import { getCookie } from "typescript-cookie";
-
 export interface LinkInterface {
   name: string;
   url: string;
@@ -7,7 +5,7 @@ export interface LinkInterface {
 }
 
 const getLinks = (): LinkInterface[] => {
-  const links = getCookie('links');
+  const links = window.localStorage.getItem('links');
   if (links) {
     return JSON.parse(links);
   }
@@ -15,9 +13,9 @@ const getLinks = (): LinkInterface[] => {
 }
 
 export const Config = {
-  stationID: getCookie('id'),
-  weatherZip: getCookie('zip'),
-  apiKey: getCookie('key'),
+  stationID: window.localStorage.getItem('id'),
+  weatherZip: window.localStorage.getItem('zip'),
+  apiKey: window.localStorage.getItem('key'),
   links: getLinks(),
 };
 
