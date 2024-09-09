@@ -1,6 +1,6 @@
 import { Card, Typography, Image, Divider, Statistic } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { Config } from '../Config';
+import { apiKey, Config } from '../Config';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 
 // api reference: https://docs.google.com/document/d/1_Zte7-SdOjnzBttb1-Y9e0Wgl0_3tah9dSwXUyEA3-c/edit
@@ -42,7 +42,7 @@ interface DailyWeatherCard {
 }
 
 const Weather = () => {
-  const { stationID, weatherZip, apiKey } = Config;
+  const { stationID, weatherZip } = Config;
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
   const [currentWeather, setCurrentWeather] = useState<CurrentResponse | null>(null);
   const [dailyWeather, setDailyWeather] = useState<DailyWeatherCard[]>([]);
@@ -52,14 +52,14 @@ const Weather = () => {
       `https://api.weather.com/v3/wx/forecast/daily/5day?postalKey=${weatherZip}:US&units=e&language=en-US&format=json&apiKey=${apiKey}`,
     ).then(res => res.json());
     setWeather(response);
-  }, [apiKey, weatherZip]);
+  }, [weatherZip]);
 
   const getCurrentConditions = useCallback(async () => {
     const response = await fetch(
       `https://api.weather.com/v2/pws/observations/current?stationId=${stationID}&format=json&units=e&apiKey=${apiKey}`,
     ).then(res => res.json());
     setCurrentWeather(response.observations[0]);
-  }, [apiKey, stationID]);
+  }, [stationID]);
 
   const getWeatherIcon = useCallback(
     (index: number): number => {
@@ -113,7 +113,7 @@ const Weather = () => {
     if (stationID && apiKey) {
       getCurrentConditions();
     }
-  }, [apiKey, getCurrentConditions, getWeather, stationID, weatherZip]);
+  }, [getCurrentConditions, getWeather, stationID, weatherZip]);
 
   useEffect(() => {
     buildDailyCard();

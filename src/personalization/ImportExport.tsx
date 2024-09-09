@@ -10,9 +10,6 @@ const ImportExport = () => {
     reader.onload = e => {
       const parsedJSON = JSON.parse(e.target?.result as string) as typeof Config;
 
-      if (parsedJSON.apiKey) {
-        window.localStorage.setItem('key', parsedJSON.apiKey);
-      }
       if (parsedJSON.stationID) {
         window.localStorage.setItem('id', parsedJSON.stationID);
       }

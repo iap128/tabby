@@ -12,10 +12,11 @@ const getLinks = (): LinkInterface[] => {
   return [];
 }
 
+export const apiKey = '7c8632e7f0c34cfa8632e7f0c36cfa4a';
+
 export const Config = {
   stationID: window.localStorage.getItem('id'),
   weatherZip: window.localStorage.getItem('zip'),
-  apiKey: window.localStorage.getItem('key'),
   links: getLinks(),
 };
 
@@ -23,5 +24,4 @@ export const Config = {
 /*
 KORBEAVE588
 97008
-7c8632e7f0c34cfa8632e7f0c36cfa4a
 */

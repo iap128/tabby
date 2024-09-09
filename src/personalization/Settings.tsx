@@ -44,9 +44,6 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
       <Form form={form} onFinish={closeFunction} autoComplete='off'>
         <Typography.Title level={3}>Weather</Typography.Title>
 
-        <Form.Item label='API Key' name='key' initialValue={Config.apiKey}>
-          <Input />
-        </Form.Item>
         <Button
           size='small'
           icon={<QuestionOutlined />}
