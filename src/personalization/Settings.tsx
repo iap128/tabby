@@ -1,7 +1,6 @@
 import { Button, Divider, Drawer, Form, Input, Typography } from 'antd';
 import { Config } from '../Config';
 import { FC, useState } from 'react';
-import { setCookie } from 'typescript-cookie';
 import LinkAdder from '../LinkAdder';
 import { QuestionOutlined } from '@ant-design/icons';
 import ImportExport from './ImportExport';
@@ -17,13 +16,13 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
 
   const closeFunction = (values: any) => {
     if (values.key) {
-      setCookie('key', values.key, { expires: 365 });
+      window.localStorage.setItem('key', values.key);
     }
     if (values.station) {
-      setCookie('id', values.station, { expires: 365 });
+      window.localStorage.setItem('id', values.station);
     }
     if (values.zip) {
-      setCookie('zip', values.zip, { expires: 365 });
+      window.localStorage.setItem('zip', values.zip);
     }
 
     setOpen(false);

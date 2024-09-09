@@ -1,6 +1,5 @@
 import { Tour, TourProps } from "antd";
 import { FC, useEffect, useState } from "react";
-import { getCookie } from "typescript-cookie";
 
 interface Props {
     closeAction: () => void;
@@ -11,7 +10,7 @@ interface Props {
 
 const AppTour: FC<Props> = ({ closeAction, weatherRef, quickLinksRef, settingsRef }) => {
     const [open, setOpen] = useState(false);
-    const firstVisit = getCookie('firstVisit');
+    const firstVisit = window.localStorage.getItem('firstVisit');
   
     useEffect(() => {
       if (firstVisit == null) {

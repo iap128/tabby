@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { Config, LinkInterface } from './Config';
 import { Button, Form, Image, Input, Typography } from 'antd';
-import { setCookie } from 'typescript-cookie';
 import { DeleteOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -22,14 +21,14 @@ const LinkAdder: FC<Props> = ({ setLinkChanged }) => {
     };
 
     setAdding(false);
-    setCookie('links', JSON.stringify([...links, newLink]), { expires: 365 });
+    window.localStorage.setItem('links', JSON.stringify([...links, newLink]));
     setLinks([...links, newLink]);
     setLinkChanged(true);
   };
 
   const deleteLink = (link: LinkInterface) => {
     const updatedLinks = links.filter(l => l !== link);
-    setCookie('links', JSON.stringify(updatedLinks), { expires: 365 });
+    window.localStorage.setItem('links', JSON.stringify(updatedLinks));
     setLinks(updatedLinks);
     setLinkChanged(true);
   };

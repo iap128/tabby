@@ -7,7 +7,6 @@ import { Button, FloatButton, Layout } from 'antd';
 import { useRef, useState } from 'react';
 import Settings from './personalization/Settings';
 import { SettingOutlined } from '@ant-design/icons';
-import { setCookie } from 'typescript-cookie';
 import AppTour from './AppTour';
 
 function App() {
@@ -19,7 +18,7 @@ function App() {
 
   const endTour = () => {
     setOpen(true);
-    setCookie('firstVisit', 'false', { expires: 365 });
+    window.localStorage.setItem('firstVisit', 'false');
   };
 
   return (
