@@ -1,16 +1,15 @@
 import './App.css';
-import Time from './cards/Time';
 import Weather from './cards/Weather';
-import QuickLinks from './cards/QuickLinks';
-import CalendarCard from './cards/CalendarCard';
 import { Button, FloatButton, Layout } from 'antd';
 import { useRef, useState } from 'react';
 import Settings from './personalization/Settings';
 import { SettingOutlined } from '@ant-design/icons';
 import AppTour from './AppTour';
+import Column2 from './components/Column2';
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [sorting, setSorting] = useState(false);
 
   const weatherRef = useRef(null);
   const quickLinksRef = useRef(null);
@@ -37,28 +36,26 @@ function App() {
         type="primary"
         onClick={() => setOpen(true)}
       />
-      <Settings open={open} setOpen={setOpen} />
+      <Settings open={open} setOpen={setOpen} setSorting={setSorting} />
+
       <div style={{ display: 'flex', gap: '20px', height: '85vh' }}>
         <div ref={weatherRef} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <Weather />
         </div>
 
-        <div
-          ref={quickLinksRef}
-          style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '33%' }}
-        >
-          <QuickLinks />
-          <Time />
-          <CalendarCard />
+        <div ref={quickLinksRef}>
+          <Column2 sorting={sorting} />
         </div>
       </div>
-
+      
       <AppTour
         closeAction={endTour}
         weatherRef={weatherRef}
         quickLinksRef={quickLinksRef}
         settingsRef={settingsRef}
       />
+
+      {sorting && <Button block type='primary'>Save</Button>}
 
       <Layout.Footer style={{ textAlign: 'center' }}>
         Made with ❤️ by{' '}

@@ -8,9 +8,10 @@ import ImportExport from './ImportExport';
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  setSorting: (sorting: boolean) => void;
 }
 
-const Settings: FC<Props> = ({ open, setOpen }) => {
+const Settings: FC<Props> = ({ open, setOpen, setSorting }) => {
   const [form] = Form.useForm();
   const [changedLink, setChangedLink] = useState(false);
 
@@ -29,6 +30,11 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
     window.location.reload();
   };
 
+  const sortCards = () => {
+    setSorting(true);
+    setOpen(false);
+  }
+
   return (
     <Drawer
       title='Settings'
@@ -41,6 +47,10 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
         }
       }}
     >
+      <Typography.Title level={3}>Re-Order Cards</Typography.Title>
+      <Button block danger onClick={sortCards}>Sort</Button>
+      <Divider />
+
       <Form form={form} onFinish={closeFunction} autoComplete='off'>
         <Typography.Title level={3}>Weather</Typography.Title>
 
