@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Form, Input, Typography } from 'antd';
+import { Button, Divider, Drawer, Flex, Form, Input, Typography } from 'antd';
 import { Config } from '../Config';
 import { FC, useState } from 'react';
 import LinkAdder from '../LinkAdder';
@@ -44,24 +44,16 @@ const Settings: FC<Props> = ({ open, setOpen }) => {
       <Form form={form} onFinish={closeFunction} autoComplete='off'>
         <Typography.Title level={3}>Weather</Typography.Title>
 
-        <Button
-          size='small'
-          icon={<QuestionOutlined />}
-          onClick={() =>
-            window.open(
-              'https://openthings.freshdesk.com/support/solutions/articles/5000017485-getting-a-weather-underground-wu-api-key',
-            )
-          }
-        />
-
-        <Form.Item label='Station ID' name='station' initialValue={Config.stationID}>
-          <Input />
-        </Form.Item>
-        <Button
-          size='small'
-          icon={<QuestionOutlined />}
-          onClick={() => window.open('https://www.wunderground.com/pws/overview')}
-        />
+        <Flex>
+          <Form.Item label='Station ID' name='station' initialValue={Config.stationID}>
+            <Input />
+          </Form.Item>
+          <Button
+            size='small'
+            icon={<QuestionOutlined />}
+            onClick={() => window.open('https://www.wunderground.com/pws/overview')}
+          />
+        </Flex>
 
         <Form.Item label='Zip Code' name='zip' initialValue={Config.weatherZip}>
           <Input />
