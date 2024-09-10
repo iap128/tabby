@@ -43,7 +43,7 @@ function App() {
           <Weather />
         </div>
 
-        <div ref={quickLinksRef}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '33%' }}>
           <Column2 sorting={sorting} />
         </div>
       </div>
@@ -55,7 +55,7 @@ function App() {
         settingsRef={settingsRef}
       />
 
-      {sorting && <Button block type='primary'>Save</Button>}
+      {sorting && <Button danger block type='primary'>Save</Button>}
 
       <Layout.Footer style={{ textAlign: 'center' }}>
         Made with ❤️ by{' '}

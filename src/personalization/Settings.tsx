@@ -48,7 +48,7 @@ const Settings: FC<Props> = ({ open, setOpen, setSorting }) => {
       }}
     >
       <Typography.Title level={3}>Re-Order Cards</Typography.Title>
-      <Button block danger onClick={sortCards}>Sort</Button>
+      <Button block danger type='primary' onClick={sortCards}>Sort</Button>
       <Divider />
 
       <Form form={form} onFinish={closeFunction} autoComplete='off'>
