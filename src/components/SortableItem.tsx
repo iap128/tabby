@@ -4,6 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import QuickLinks from "../cards/QuickLinks";
 import Time from "../cards/Time";
 import CalendarCard from "../cards/CalendarCard";
+import Weather from "../cards/Weather";
 
 interface Props {
     id: string;
@@ -27,6 +28,8 @@ const SortableItem: FC<Props> = ({ id }) => {
             return <Time />;
           case 'calendar':
             return <CalendarCard />;
+        case 'weather':
+            return <Weather />
           default:
             return null;
         }

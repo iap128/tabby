@@ -12,10 +12,12 @@ import SortableItem from './SortableItem';
 
 interface Props {
   sorting: boolean;
+  columnName: string;
+  cards: string[];
 }
 
-const Column2: FC<Props> = ({ sorting }) => {
-  const [items, setItems] = useState(['quick-links', 'time', 'calendar']);
+const CardsColumn: FC<Props> = ({ sorting, columnName, cards }) => {
+  const [items, setItems] = useState(cards);
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -27,6 +29,8 @@ const Column2: FC<Props> = ({ sorting }) => {
       const newArray = arrayMove(items, oldIndex, newIndex);
 
       setItems(newArray);
+
+      window.localStorage.setItem(columnName, newArray.toString());
     }
   };
 
@@ -41,4 +45,4 @@ const Column2: FC<Props> = ({ sorting }) => {
   );
 };
 
-export default Column2;
+export default CardsColumn;

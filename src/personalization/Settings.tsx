@@ -33,7 +33,13 @@ const Settings: FC<Props> = ({ open, setOpen, setSorting }) => {
   const sortCards = () => {
     setSorting(true);
     setOpen(false);
-  }
+  };
+
+  const resetOrder = () => {
+    window.localStorage.removeItem('column1');
+    window.localStorage.removeItem('column2');
+    window.location.reload();
+  };
 
   return (
     <Drawer
@@ -48,7 +54,8 @@ const Settings: FC<Props> = ({ open, setOpen, setSorting }) => {
       }}
     >
       <Typography.Title level={3}>Re-Order Cards</Typography.Title>
-      <Button block danger type='primary' onClick={sortCards}>Sort</Button>
+      <Button block type='primary' onClick={sortCards}>Sort</Button>
+      <Button block danger onClick={resetOrder}>Reset Order</Button>
       <Divider />
 
       <Form form={form} onFinish={closeFunction} autoComplete='off'>

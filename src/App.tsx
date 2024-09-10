@@ -1,11 +1,10 @@
 import './App.css';
-import Weather from './cards/Weather';
 import { Button, FloatButton, Layout } from 'antd';
 import { useRef, useState } from 'react';
 import Settings from './personalization/Settings';
 import { SettingOutlined } from '@ant-design/icons';
 import AppTour from './AppTour';
-import Column2 from './components/Column2';
+import CardsColumn from './components/CardsColumn';
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -40,14 +39,14 @@ function App() {
 
       <div style={{ display: 'flex', gap: '20px', height: '85vh' }}>
         <div ref={weatherRef} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <Weather />
+          <CardsColumn columnName='column1' sorting={sorting} cards={window.localStorage.getItem('column1')?.split(',') || ['weather']} />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '33%' }}>
-          <Column2 sorting={sorting} />
+          <CardsColumn columnName='column2' sorting={sorting} cards={window.localStorage.getItem('column2')?.split(',') || ['quick-links', 'time', 'calendar']} />
         </div>
       </div>
-      
+
       <AppTour
         closeAction={endTour}
         weatherRef={weatherRef}
@@ -55,7 +54,11 @@ function App() {
         settingsRef={settingsRef}
       />
 
-      {sorting && <Button danger block type='primary'>Save</Button>}
+      {sorting && (
+        <Button danger block type="primary" onClick={() => setSorting(false)}>
+          Save
+        </Button>
+      )}
 
       <Layout.Footer style={{ textAlign: 'center' }}>
         Made with ❤️ by{' '}
